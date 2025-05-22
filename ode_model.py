@@ -125,7 +125,7 @@ def model(y, t, p):
     UB_MVRNA_Pol_Pol = p['k'] * K['dG_vRNA'] * MVRNA_Pol_Pol
 
     # Double stranded mini formation from capped MVRNA/MCRNA
-    B_DS_MVRNA = p['k'] * cappedMCRNA * cappedMVRNA
+    B_DS_MVRNA = p['k'] * cappedMCRNA * MVRNA
     # dG_DF is to high to model -> irreversible
     UB_DS_MVRNA = 0 # p['k'] * K['dG_DS'] * dsMVRNA * 0.0
 
@@ -318,13 +318,13 @@ def build_reaction_stoichiometry(p):
 
     # cappedMCRNA + cappedMVRNA -B_DS_MVRNA-> dsMVRNA
     M[rates['B_DS_MVRNA'], species['cappedMCRNA']] = -1
-    M[rates['B_DS_MVRNA'], species['cappedMVRNA']] = -1
+    M[rates['B_DS_MVRNA'], species['MVRNA']] = -1
     M[rates['B_DS_MVRNA'], species['dsMVRNA']] = 1
 
     # dsMVRNA -UB_DS_MVRNA-> cappedMCRNA + cappedMVRNA
     M[rates['UB_DS_MVRNA'], species['dsMVRNA']] = -1
     M[rates['UB_DS_MVRNA'], species['cappedMCRNA']] = 1
-    M[rates['UB_DS_MVRNA'], species['cappedMVRNA']] = 1
+    M[rates['UB_DS_MVRNA'], species['MVRNA']] = 1
     
     # Transcription rates
     # Sv + Cap -T_Pol-> mRNA_Pol + Sv
